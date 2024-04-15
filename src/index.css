@@ -1,3 +1,23 @@
+@import url('https://fonts.cdnfonts.com/css/galano-grotesque-alt');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'Trebuchet MS';
+    line-height: 32px;
+    letter-spacing: 0.48px;
+    font-weight: 700;
+    text-align: inherit;
+    color: red;
+    src: local('Trebuchet MS'), url('../public/font/trebuc.woff') format('woff');
+}
+
+
+
+
+body {
+
+    font-family: 'Trebuchet MS', sans-serif;
+}
