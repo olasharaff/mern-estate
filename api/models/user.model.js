@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+// create user schema rules
 const userSchema = new mongoose.Schema({
     username: {
         type: 'string',
