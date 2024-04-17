@@ -1,8 +1,10 @@
 import User from "../models/user.model.js";
 import bcryptjs from 'bcryptjs'
+// import function to handle errors
+// import { errorHandler } from "../utilis/error.js";
 // to encrypt the password we need to install bcrypt in the backend mern-estate directory and then encrypt the password
 
-export const signup = async (req, res) =>{
+export const signup = async (req, res, next) =>{
 //   destructuring the request body
     const {username, email, password} = req.body;
     // bcrypt the password by hashing it
@@ -15,7 +17,10 @@ export const signup = async (req, res) =>{
       // send a response to the client
       res.status(201).json("Account created successfully!");
     } catch (error) {
-        res.status(500).json(error.message);
+        // create a middleware to handle the error
+        next(error);
+        // create a function to handle the error
+        //  next(errorHandler(550, "Error from the function"));
     }
    
 }
