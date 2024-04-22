@@ -6,11 +6,10 @@ import authRouter from "./routes/auth.route.js";
 import dotenv from 'dotenv';
 dotenv.config();
 
-
-mongoose.connect(
-  process.env.MONGO
-).then(() => {
-    console.log('Connected to MongoDB!!!')
+const Uri =
+  "mongodb+srv://AshrafDev:Rahman77@mern-estate.wf8u2rc.mongodb.net/?retryWrites=true&w=majority&appName=mern-estate"
+mongoose.connect(Uri)
+.then(() => {console.log('Connected to MongoDB!!!')
 }).catch((err) => console.log(err));
 
 
