@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 // import dispatch from "react-redux"; to handle dispatch functions
 import { useDispatch, useSelector } from "react-redux";
 import { signInFailure, signInStart, signInSuccess } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
@@ -80,12 +81,7 @@ export default function SignIn() {
         </Link>
       </div>
 
-      <button
-        type="button"
-        className="bg-[#b31212d6] w-full text-center mt-2 p-3 rounded-md hover:shadow-lg text-white"
-      >
-        Continue with Google
-      </button>
+     <OAuth/>
     </div>
   );
 }

@@ -52,3 +52,45 @@ export const signin = async (req, res, next) => {
   }
 
 }
+export const google = async (req, res, next) => {
+  try {
+    // check if email exists
+    const user = await User.findOne({ email: req.body.email });
+    // if email exist we can to register user and otherwise create a new user
+    if (user) {
+      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY);
+      const { password: pass, ...rest } = user._doc;
+      res
+        .cookies("access-token", token, { httpOnly: true })
+        .status(200)
+        .json(rest);
+    } else {
+      // signing with google, we dont get password and it going to throw an error so therefore we need to create a password
+      // we need to generate random password so later user can update password themselves
+      // create a random number and convert it to a string and add based 36 which means 1 to 9 & A to Z
+      const generatedPassword =
+        Math.random().toString(36).slice(-8) +
+        Math.random().toString(36).slice(-8);
+    }
+    // then we hash the password
+    const hashPassword = bcryptjs.hashSync(generatedPassword, 10);
+    // convert the fullname to username and add few number.
+
+    const newUser = new User({
+      username:
+        req.body.name.split(" ").join("").toLowerCase() +
+        Math.random().toString(36).slice(-4),
+      email: req.body.email,
+      password: hashPassword,
+      avatar: req.body.photo
+    })
+    await newUser.save()
+    const token = jwt.sign({id: newUser.id}, process.env.JWT_SECRET_KEY)
+    const {password: pass, ...rest} = newUser._doc
+    res.cookie('access_token', token, {httpOnly: true}).status(200).json(rest)
+
+
+  } catch (error) {
+    next(error);
+  }
+}
