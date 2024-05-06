@@ -1,5 +1,6 @@
 
 import jwt from "jsonwebtoken"
+import { errorHandler } from "./error.js"
 
 export const verifyUser = (req, res, next) => {
 // we need to get data from the cookie and in order to get any data from the cookie we need to install another package
@@ -8,7 +9,7 @@ export const verifyUser = (req, res, next) => {
 // we will import cookieParser and use it in the backend index.js
 // ---------------------------------------------------------------->
 // get the access token from the cookie and verify it
-const token = req.cookies.access_token
+const token = req.cookies.access_token;
 if(!token) return next(errorHandler(401, 'Unauthorized'))
 jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
   if (err) return next(errorHandler(403, "Invalid"));

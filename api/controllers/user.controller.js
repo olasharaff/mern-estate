@@ -21,11 +21,11 @@ export const updateUser = async  (req, res, next) => {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
-        avatar: req.body.avatar
+        avatar: req.body.avatar,
       }
     }, {new: true});
-    const {password, ...rest} = updateUser._doc
-    res.status(200).json(rest)
+    const {password, ...rest} = updateUser._doc;
+    res.status(200).json(rest);
   } catch (error) {
     next(error)
   }

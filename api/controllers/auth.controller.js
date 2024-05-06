@@ -42,7 +42,7 @@ export const signin = async (req, res, next) => {
     if (!validPassword) return next(errorHandler(401, "Invalid password"))
     // if both email and password are correct, we need to authenticate and we can only do that by adding cookies inside the browser
     // we need to create the hash token that includes the email or Id of the user and saved the token in the browser cookies
-    const token = jwt.sign({id: validPassword.id}, process.env.JWT_SECRET_KEY)
+    const token = jwt.sign({id: validPassword._id}, process.env.JWT_SECRET_KEY)
     // delete the password from the browser cookies by the destructuring the Valid user doc
     const {password: pass , ...rest} = ValidUser._doc
     // save the token as the cookie
@@ -73,18 +73,16 @@ export const google = async (req, res, next) => {
         Math.random().toString(36).slice(-8);
       // then we hash the password
       const hashPassword = bcryptjs.hashSync(generatedPassword, 10);
-      // convert the fullname to username and add few number.
-
+    
       const newUser = new User({
-        username:
-          req.body.name.split(" ").join("").toLowerCase() +
+        username: req.body.name.split(' ').join("").toLowerCase() +
           Math.random().toString(36).slice(-4),
         email: req.body.email,
         password: hashPassword,
         avatar: req.body.photo,
       });
       await newUser.save();
-      const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET_KEY);
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY);
       const { password: pass, ...rest } = newUser._doc;
       res
         .cookie("access_token", token, { httpOnly: true })

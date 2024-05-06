@@ -7,7 +7,7 @@ import {useSelector} from 'react-redux'
 
 export default function Header() {
   // get the cuurentUser from the useSelector
-  const {currentUser} = useSelector(state => state.user)
+  const {currentUser} = useSelector((state) => state.user)
   const navigate = useNavigate();
   return (
     <header className="bg-[#f0cec3d3] shadow-md">
@@ -35,8 +35,15 @@ export default function Header() {
             <Link to="/about">About</Link>
           </li>
           <Link to="/profile">
-          {currentUser ? (<img src={currentUser.avatar} alt='Profile' className='w-7 h-7 rounded-full object-cover'/>) : (<li className="hover:underline cursor-pointer">Sign in</li>)}
-            
+            {currentUser ? (
+              <img
+                className="rounded-full h-7 w-7 object-cover"
+                src={currentUser.avatar}
+                alt="profile"
+              />
+            ) : (
+              <li className=" text-slate-700 hover:underline"> Sign in</li>
+            )}
           </Link>
         </ul>
       </div>
