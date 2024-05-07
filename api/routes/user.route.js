@@ -1,5 +1,9 @@
 import express from 'express'
-import { test, updateUser } from '../controllers/user.controller.js';
+import {
+  test,
+  updateUser,
+  deleteUser,
+} from "../controllers/user.controller.js";
 import { verifyUser } from '../utilis/verifyUser.js';
 
 // use express to create a Router instance
@@ -16,5 +20,6 @@ router.get("/test", test);
 // we will create another function to verify the user that is updating his profile
 
 router.post('/update/:id', verifyUser,  updateUser)
+router.delete("/delete/:id", verifyUser, deleteUser);
 
 export default router
